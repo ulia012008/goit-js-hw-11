@@ -1,56 +1,51 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
 
-let lightbox = null;
+const gallery = document.querySelector(`.gallery`);
+let lightbox = new SimpleLightbox('.gallery a', {
+  captions: true, // Увімкнення підписів
+  captionsData: 'alt', // Брати підпис з атрибуту alt
+  captionDelay: 250,
+});
 
-export function renderGallery(images) {
-  const gallery = document.querySelector('.gallery');
-  const markup = images
-    .map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) =>
-        `<li class="gallery-item">
-          <a class="gallery-link" href="${largeImageURL}">
-            <img
-              class="gallery-image"
-              src="${webformatURL}"
-              alt="${tags}"
-            />
-          </a>
-          <div class="info">
-            <p><b>Likes:</b> ${likes}</p>
-            <p><b>Views:</b> ${views}</p>
-            <p><b>Comments:</b> ${comments}</p>
-            <p><b>Downloads:</b> ${downloads}</p>
-          </div>
-        </li>`
+export function clearGallery() {
+  gallery.innerHTML = ''; // Очищаємо контейнер перед рендерингом
+}
+
+export function renderImages(images) {
+  clearGallery(); // Очищаємо перед додаванням нових картинок
+
+  const markup = images.map(
+      ({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `
+      <li class="gallery-item">
+        <a href="${largeImageURL}" class="gallery-link">
+          <img src="${webformatURL}" alt="${tags}" class="gallery-image" />
+        </a>
+        <div class="info">
+        <ul class="baner">
+          <li class="baner-li">
+            <p class="baner-title">Likes</p>
+            <p class="baner-text">${likes}</p>
+          </li>
+          <li class="baner-li">
+            <p class="baner-title">Views</p>
+            <p class="baner-text">${views}</p>
+          </li>
+          <li class="baner-li">
+            <p class="baner-title">Comments</p>
+            <p class="baner-text">${comments}</p>
+          </li>
+          <li class="baner-li">
+            <p class="baner-title">Downloads</p>
+            <p class="baner-text">${downloads}</p>
+          
+            </li>
+        </ul>
+        </div>
+      </li>`
     )
     .join('');
 
-  gallery.innerHTML = markup;
-
-  if (!lightbox) {
-    lightbox = new SimpleLightbox('.gallery a', {
-      captionsData: 'alt',
-      captionDelay: 250,
-    });
-  } else {
-    lightbox.refresh();
-  }
-}
-export function clearGallery() {
-  document.querySelector('.gallery').innerHTML = '';
-}
-export function toggleLoader(show) {
-  const loader = document.querySelector('.loader');
-  loader.style.display = show ? 'inline-block' : 'none';
+    gallery.innerHTML = markup;
+    lightbox.refresh(); // Оновлюємо Lightbox після додавання нових зображень
 }
