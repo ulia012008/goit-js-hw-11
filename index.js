@@ -1,16 +1,28 @@
-import{S as y,i}from"./assets/vendor-BrddEoy-.js";(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))s(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const a of t.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&s(a)}).observe(document,{childList:!0,subtree:!0});function r(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function s(e){if(e.ep)return;e.ep=!0;const t=r(e);fetch(e.href,t)}})();const g="48145276-ba1887f72c90a3fcdb02285cd";async function p(n){const o=new URLSearchParams({key:g,q:n,image_type:"photo",orientation:"horizontal",safesearch:"true"});try{const r=await fetch(`https://pixabay.com/api/?${o}`);if(!r.ok)throw new Error("Failed to fetch images");return r.json()}catch(r){throw console.error(r.message),r}}let l=null;function h(n){const o=document.querySelector(".gallery"),r=n.map(({webformatURL:s,largeImageURL:e,tags:t,likes:a,views:f,comments:m,downloads:d})=>`<li class="gallery-item">
-          <a class="gallery-link" href="${e}">
-            <img
-              class="gallery-image"
-              src="${s}"
-              alt="${t}"
-            />
-          </a>
-          <div class="info">
-            <p><b>Likes:</b> ${a}</p>
-            <p><b>Views:</b> ${f}</p>
-            <p><b>Comments:</b> ${m}</p>
-            <p><b>Downloads:</b> ${d}</p>
-          </div>
-        </li>`).join("");o.innerHTML=r,l?l.refresh():l=new y(".gallery a",{captionsData:"alt",captionDelay:250})}function b(){document.querySelector(".gallery").innerHTML=""}function c(n){const o=document.querySelector(".loader");o.style.display=n?"inline-block":"none"}const u=document.querySelector("#formImg"),w=document.querySelector("#searchImg");u.addEventListener("submit",async n=>{n.preventDefault();const o=w.value.trim();if(!o){i.warning({title:"Warning",message:"Please enter a search term!"});return}u.reset(),b(),c(!0);try{const r=await p(o);if(c(!1),r.hits.length===0){i.error({title:"Error",message:"Sorry, there are no images matching your search query. Please try again!"});return}h(r.hits)}catch{c(!1),i.error({title:"Error",message:"Something went wrong. Please try again later."})}});
+import{S as f,a as m,i as o}from"./assets/vendor-Bd9JIWAl.js";(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const l of t.addedNodes)l.tagName==="LINK"&&l.rel==="modulepreload"&&i(l)}).observe(document,{childList:!0,subtree:!0});function s(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function i(e){if(e.ep)return;e.ep=!0;const t=s(e);fetch(e.href,t)}})();const c=document.querySelector(".gallery");let d=new f(".gallery a",{captions:!0,captionsData:"alt",captionDelay:250});function g(){c.innerHTML=""}function y(a){g();const r=a.map(({webformatURL:s,largeImageURL:i,tags:e,likes:t,views:l,comments:u,downloads:p})=>`
+      <li class="gallery-item">
+        <a href="${i}" class="gallery-link">
+          <img src="${s}" alt="${e}" class="gallery-image" />
+        </a>
+        <div class="info">
+        <ul class="baner">
+          <li class="baner-li">
+            <p class="baner-title">Likes</p>
+            <p class="baner-text">${t}</p>
+          </li>
+          <li class="baner-li">
+            <p class="baner-title">Views</p>
+            <p class="baner-text">${l}</p>
+          </li>
+          <li class="baner-li">
+            <p class="baner-title">Comments</p>
+            <p class="baner-text">${u}</p>
+          </li>
+          <li class="baner-li">
+            <p class="baner-title">Downloads</p>
+            <p class="baner-text">${p}</p>
+          
+            </li>
+        </ul>
+        </div>
+      </li>`).join("");c.innerHTML=r,d.refresh()}const h="49488951-e375fee229e59287138537a31",b="https://pixabay.com/api/";async function L(a){try{const r=await m.get(b,{params:{key:h,q:a,image_type:"photo",orientation:"horizontal",safesearch:!0}});return console.log(r.data),r.data.hits}catch(r){throw console.error("Error fetching images:",r),r}}const v=document.querySelector("form"),x=document.querySelector(".gallery"),n=document.querySelector(".loader");v.addEventListener("submit",async a=>{a.preventDefault();const r=a.target.elements["search-text"].value.trim();if(!r){o.error({title:"Error",message:"Please enter a search query!"});return}x.innerHTML="",n.classList.add("visible");try{const s=await L(r);console.log(s),s.length===0?o.warning({title:"Oops!",message:"No images found. Try again!"}):y(s)}catch{o.error({title:"Error",message:" Failed to fetch images. Try again later!"})}finally{n.classList.remove("visible")}});
 //# sourceMappingURL=index.js.map
